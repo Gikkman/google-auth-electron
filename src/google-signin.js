@@ -1,6 +1,8 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+
+const {BrowserWindow} = require('electron')
 const { google } = require('googleapis');
 const opn = require('open');
 
@@ -23,6 +25,10 @@ const CREDENTIALS_PATH = 'credentials_web.json';
 
 // Port you'll use for the web request callback. 
 const CALLBACK_PORT = 9876
+
+// Set this to true to open the 'authenticate' prompt in the default browser
+// Set this to false to open a new Electron BrowserWindow to do the auth prompt
+const USE_BROWSER_FOR_AUTH = false;
 
 /**************************************************************
  * BREAD & BUTTER
@@ -74,9 +80,11 @@ function getNewToken(oAuth2Client, callback) {
         access_type: 'offline',
         scope: SCOPES,
     });
-    opn(authUrl);
 
+    // Create auth prompt
+    let win = createAuthPrompt(authUrl);
     
+    // Create a temp server for receiving the authentication approval request
     const server = http.createServer(function (req, res) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end("OK. You can close this tab now.");
@@ -94,16 +102,34 @@ function getNewToken(oAuth2Client, callback) {
                 if (err) return console.error(err);
                 console.log('Token stored to', TOKEN_PATH);
             });
-            
-            callback(oAuth2Client);
-            
+
+            // Close the auth window (if it was an electron window) and stop the server
+            if(win) win.close();
             server.close( err => {
                 if(err) return console.log(err)
                 console.log("Server closed")
             });
+            
+            // Call the callback
+            callback(oAuth2Client);
         });
     });
     server.listen(CALLBACK_PORT);
+}
+
+function createAuthPrompt(authUrl) {
+    if(USE_BROWSER_FOR_AUTH) {
+        opn(authUrl);
+    }
+    else {
+        let win = new BrowserWindow({
+            width: 400,
+            height: 600,
+        });
+        win.loadURL(authUrl, {userAgent: 'Chrome'});
+        win.show();
+        return win;
+    }
 }
 
 /**************************************************************

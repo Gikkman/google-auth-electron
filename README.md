@@ -1,6 +1,8 @@
 # google-auth-electron
 Sample app for verifying against Google. This repo is based of the article [Google Auth in Electron - Authenticating with Google OAuth2 with a file-based origin](https://blog.ecliptic.io/google-auth-in-electron-a47b773940ae) and on [Google's own example](https://developers.google.com/sheets/api/quickstart/nodejs) but has some tweeks of my own.
 
+The example allows you to either authenticate using a new Electron BrowserWindow, or to authenticate using the OS default browser
+
 # Getting Credentials
 The procedure is documented by google here: [Using OAuth 2.0 for Mobile and Desktop Applications](https://developers.google.com/identity/protocols/OAuth2InstalledApp)
 
