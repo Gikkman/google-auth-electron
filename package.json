@@ -1,0 +1,36 @@
+{
+  "name": "google-auth-electron",
+  "version": "1.0.0",
+  "description": "Sample app for using Google OAuth with Electron",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gikkman/google-auth-electron.git"
+  },
+  "keywords": [
+    "google",
+    "oauth",
+    "electron",
+    "signin",
+    "credential",
+    "credentials",
+    "node"
+  ],
+  "author": "Gikkman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gikkman/google-auth-electron/issues"
+  },
+  "homepage": "https://github.com/Gikkman/google-auth-electron#readme",
+  "devDependencies": {
+    "electron": "^7.1.7"
+  },
+  "dependencies": {
+    "googleapis": "^46.0.0",
+    "open": "^7.0.0"
+  }
+}
