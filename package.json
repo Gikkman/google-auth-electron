@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/Gikkman/google-auth-electron#readme",
   "devDependencies": {
-    "electron": "^7.1.7"
+    "electron": "^11.5.0"
   },
   "dependencies": {
     "googleapis": "^46.0.0",
